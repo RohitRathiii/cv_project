@@ -1,0 +1,131 @@
+# Apple Detection and Quality Grading Pipeline Configuration
+
+# Model Configurations
+model:
+  detection:
+    model_name: "yolov8n"
+    input_size: [640, 640]
+    confidence_threshold: 0.3
+    iou_threshold: 0.5
+    max_detections: 100
+    # MinneApple integration settings
+    use_minneapple_weights: true
+    minneapple_model_variants:
+      - "models/minneapple/Original_augmented_best.pt"
+      - "models/minneapple/Original_original_best.pt"
+      - "models/minneapple/Small_augmented_best.pt"
+      - "models/minneapple/Ground_augmented_best.pt"
+    
+  quality_classification:
+    model_name: "mobilenet_v3_small"
+    input_size: [224, 224]
+    num_classes: 3
+    dropout_rate: 0.2
+    
+  tracking:
+    max_age: 30
+    min_hits: 3
+    iou_threshold: 0.3
+    feature_dim: 128
+    matching_threshold: 0.7
+
+# Training Configuration
+training:
+  detection:
+    epochs: 100
+    batch_size: 16
+    learning_rate: 0.001
+    optimizer: "Adam"
+    patience: 20
+    save_period: 10
+    weight_decay: 0.0005
+    
+  quality_classification:
+    epochs: 50
+    batch_size: 32
+    learning_rate: 0.001
+    optimizer: "Adam"
+    weight_decay: 0.0001
+    step_size: 15
+    gamma: 0.1
+    early_stopping_patience: 10
+
+# Data Configuration
+data:
+  detection:
+    dataset_name: "MinneApple"
+    train_split: 0.8
+    val_split: 0.1
+    test_split: 0.1
+    
+  quality_classification:
+    dataset_name: "AppleDefects"
+    classes: ["good", "minor_defect", "major_defect"]
+    class_weights: [1.0, 1.5, 2.0]  # Balance for imbalanced classes
+    
+  augmentation:
+    horizontal_flip: 0.5
+    rotation_limit: 15
+    brightness_limit: 0.2
+    contrast_limit: 0.2
+    saturation_limit: 0.2
+    mosaic_prob: 0.5
+    mixup_prob: 0.1
+
+# Preprocessing Configuration
+preprocessing:
+  detection:
+    normalize: true
+    letterbox: true
+    
+  quality_classification:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    resize_method: "bilinear"
+
+# Performance Targets
+performance:
+  detection:
+    target_map50: 0.90
+    target_map50_95: 0.75
+    max_inference_time_ms: 100
+    
+  quality_classification:
+    target_accuracy: 0.92
+    target_f1_macro: 0.90
+    
+  overall:
+    target_fps: 15
+    max_model_size_mb: 50
+    max_memory_usage_gb: 2
+
+# Hardware Configuration
+hardware:
+  device: "auto"  # auto, cpu, cuda, mps
+  num_workers: 4
+  pin_memory: true
+  
+# Paths Configuration (relative to project root)
+paths:
+  datasets:
+    detection: "datasets/detection"
+    quality: "datasets/quality"
+  models:
+    detection: "models/detection"
+    quality: "models/quality"
+    tracking: "models/tracking"
+  results: "results"
+  logs: "logs"
+  
+# Logging Configuration
+logging:
+  level: "INFO"
+  save_logs: true
+  log_interval: 10
+  
+# Experiment Tracking
+experiment:
+  use_wandb: false
+  use_tensorboard: true
+  project_name: "apple_detection_pipeline"
+  run_name: null  # Will be auto-generated if null

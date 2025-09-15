@@ -1,0 +1,18 @@
+# Dataset Configuration for YOLO Detection
+path: datasets/detection
+train: images/train
+val: images/val
+test: images/test
+
+# Number of classes
+nc: 1
+
+# Class names
+names: ['apple']
+
+# Download information (for Roboflow)
+download:
+  # Add your Roboflow API details here
+  # workspace: "your-workspace"
+  # project: "apple-detection"
+  # version: 1

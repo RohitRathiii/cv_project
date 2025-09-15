@@ -1,0 +1,25 @@
+{
+  "model_name": "minneapple",
+  "model_source": "YOLOv8n COCO",
+  "test_summary": {
+    "total_images_tested": 1,
+    "total_apples_detected": 4,
+    "avg_apples_per_image": 4.0,
+    "detection_rate": "100.0%"
+  },
+  "performance_metrics": {
+    "avg_inference_time_ms": 681.14,
+    "std_inference_time_ms": 0.0,
+    "min_inference_time_ms": 681.14,
+    "max_inference_time_ms": 681.14,
+    "avg_fps": 1.47,
+    "target_fps_achieved": "False"
+  },
+  "detection_quality": {
+    "avg_confidence_score": 0.65,
+    "min_confidence": 0.65,
+    "max_confidence": 0.65,
+    "high_confidence_detections": "0.0%"
+  },
+  "timestamp": "2025-09-14T13:12:25.763601"
+}

@@ -1,0 +1,25 @@
+# Apple Detection Dataset Configuration
+path: /Users/rohitrathi/Downloads/cv_project/datasets/detection
+train: images/train/images
+val: images/val/images
+test: images/test/images
+
+# Number of classes
+nc: 1
+
+# Class names
+names: ['Apples']
+
+# Dataset information
+roboflow:
+  workspace: lakshantha-dissanayake
+  project: apples-4o3ur
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/lakshantha-dissanayake/apples-4o3ur/dataset/1
+
+# Statistics
+# Training images: ~692
+# Validation images: ~100
+# Test images: ~100
+# Total apple instances: High quality annotations
